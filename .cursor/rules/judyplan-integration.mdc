@@ -1,0 +1,83 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# JudyPlan 集成指南
+
+JudyPlan是一个基于OpenAI兼容API的自定义AI提供商，已集成到插件中。
+
+## 关键文件
+
+- [constants.ts](mdc:src/constants.ts) - 添加了JudyPlan的枚举值和配置信息
+  ```typescript
+  export enum ChatModelProviders {
+    // 其他提供商...
+    JUDYPLAN = "judyplan",
+  }
+  
+  export const ProviderInfo: Record<Provider, ProviderMetadata> = {
+    // 其他提供商...
+    [ChatModelProviders.JUDYPLAN]: {
+      label: "JudyPlan",
+      host: "http://jdpl.judyplan.com:4000/v1",
+      keyManagementURL: "",
+      listModelURL: "http://jdpl.judyplan.com:4000/v1/models",
+    },
+  };
+  
+  export const ProviderSettingsKeyMap: Record<SettingKeyProviders, keyof CopilotSettings> = {
+    // 其他提供商...
+    judyplan: "openAIApiKey", // JudyPlan使用与OpenAI相同的API密钥字段
+  };
+  ```
+
+- [chatModelManager.ts](mdc:src/LLMProviders/chatModelManager.ts) - 添加了JudyPlan的客户端配置
+  ```typescript
+  const CHAT_PROVIDER_CONSTRUCTORS = {
+    // 其他提供商...
+    [ChatModelProviders.JUDYPLAN]: ChatOpenAI,
+  };
+  
+  private readonly providerApiKeyMap: Record<ChatModelProviders, () => string> = {
+    // 其他提供商...
+    [ChatModelProviders.JUDYPLAN]: () => getSettings().openAIApiKey,
+  };
+  
+  // providerConfig中添加了JudyPlan配置
+  [ChatModelProviders.JUDYPLAN]: {
+    modelName: modelName,
+    openAIApiKey: await getDecryptedKey(customModel.apiKey || settings.openAIApiKey),
+    configuration: {
+      baseURL: customModel.baseUrl || ProviderInfo[ChatModelProviders.JUDYPLAN].host,
+      fetch: customModel.enableCors ? safeFetch : undefined,
+      defaultHeaders: { "dangerously-allow-browser": "true" },
+    },
+    ...this.handleOpenAIExtraArgs(isOSeries, settings.maxTokens, settings.temperature),
+  },
+  ```
+
+- [providerModels.ts](mdc:src/settings/providerModels.ts) - 添加了JudyPlan的模型响应类型和适配器
+  ```typescript
+  export interface ProviderResponseMap {
+    // 其他提供商...
+    [ChatModelProviders.JUDYPLAN]: OpenAIModelResponse; // JudyPlan使用与OpenAI相同的响应格式
+  }
+  
+  export const providerAdapters: ProviderModelAdapters = {
+    // 其他适配器...
+    [ChatModelProviders.JUDYPLAN]: (data): StandardModel[] =>
+      data.data?.map((model) => ({
+        id: model.id,
+        name: model.id,
+        provider: ChatModelProviders.JUDYPLAN,
+      })) || [],
+  };
+  ```
+
+## 使用方法
+
+1. 在设置中找到JudyPlan选项
+2. 输入API密钥（使用与OpenAI相同的字段）
+3. 点击"验证"按钮获取可用模型列表
+4. 添加所需的模型到模型列表中

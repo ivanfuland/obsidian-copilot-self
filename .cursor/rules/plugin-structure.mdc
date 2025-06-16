@@ -1,0 +1,47 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Obsidian Copilot 插件结构
+
+## 核心文件
+
+- [main.ts](mdc:src/main.ts) - 插件的主入口文件，负责初始化和加载
+- [constants.ts](mdc:src/constants.ts) - 定义了所有常量，包括模型提供商、模型类型和默认设置
+- [settings/model.ts](mdc:src/settings/model.ts) - 定义了插件设置的数据模型和操作函数
+
+## 目录结构
+
+- `src/` - 源代码目录
+  - `LLMProviders/` - 各种LLM提供商的实现
+    - [chatModelManager.ts](mdc:src/LLMProviders/chatModelManager.ts) - 管理聊天模型
+    - [embeddingManager.ts](mdc:src/LLMProviders/embeddingManager.ts) - 管理嵌入模型
+    - [chainManager.ts](mdc:src/LLMProviders/chainManager.ts) - 管理聊天链
+    - [brevilabsClient.ts](mdc:src/LLMProviders/brevilabsClient.ts) - Brevilabs API客户端
+  - `settings/` - 设置相关代码
+    - `v2/` - V2版本的设置UI
+      - `components/` - 设置UI组件
+        - [ModelSettings.tsx](mdc:src/settings/v2/components/ModelSettings.tsx) - 模型设置组件
+        - [ModelTable.tsx](mdc:src/settings/v2/components/ModelTable.tsx) - 模型表格组件
+        - [ModelAddDialog.tsx](mdc:src/settings/v2/components/ModelAddDialog.tsx) - 添加模型对话框
+        - [PlusSettings.tsx](mdc:src/settings/v2/components/PlusSettings.tsx) - Plus功能设置
+    - [model.ts](mdc:src/settings/model.ts) - 设置数据模型
+    - [providerModels.ts](mdc:src/settings/providerModels.ts) - 提供商模型定义和适配器
+  - [plusUtils.ts](mdc:src/plusUtils.ts) - Plus功能相关的实用函数
+
+## 修改点
+
+1. **解锁Plus功能**
+   - [plusUtils.ts](mdc:src/plusUtils.ts) - 修改了useIsPlusUser和checkIsPlusUser函数
+   - [embeddingManager.ts](mdc:src/LLMProviders/embeddingManager.ts) - 移除了对Plus用户的检查
+   - [brevilabsClient.ts](mdc:src/LLMProviders/brevilabsClient.ts) - 修改了许可证验证方法
+
+2. **清空内置模型**
+   - [constants.ts](mdc:src/constants.ts) - 清空了BUILTIN_CHAT_MODELS和BUILTIN_EMBEDDING_MODELS数组
+   - [model.ts](mdc:src/settings/model.ts) - 修改了resetSettings和mergeAllActiveModelsWithCoreModels函数
+
+3. **添加JudyPlan提供商**
+   - [constants.ts](mdc:src/constants.ts) - 添加了JudyPlan相关的枚举和配置
+   - [chatModelManager.ts](mdc:src/LLMProviders/chatModelManager.ts) - 添加了JudyPlan的支持
+   - [providerModels.ts](mdc:src/settings/providerModels.ts) - 添加了JudyPlan的模型适配器

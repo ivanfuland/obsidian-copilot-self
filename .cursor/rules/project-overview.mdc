@@ -1,0 +1,26 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Obsidian Copilot 插件项目概述
+
+这是一个修改版的Obsidian Copilot插件，主要修改包括：
+
+1. 解锁Plus本地功能：
+   - 移除了付费限制，使所有用户都可以使用Plus功能
+   - 修改了[plusUtils.ts](mdc:src/plusUtils.ts)中的验证函数，使其始终返回true
+   - 移除了[embeddingManager.ts](mdc:src/LLMProviders/embeddingManager.ts)中对Plus用户的检查
+
+2. 清空所有内置模型设置：
+   - 清空了[constants.ts](mdc:src/constants.ts)中的BUILTIN_CHAT_MODELS和BUILTIN_EMBEDDING_MODELS数组
+   - 修改了DEFAULT_SETTINGS中的activeModels和activeEmbeddingModels为空数组
+   - 修改了[chainManager.ts](mdc:src/LLMProviders/chainManager.ts)，不再引用内置模型作为默认值
+
+3. 添加JudyPlan作为新的AI提供商：
+   - 在[constants.ts](mdc:src/constants.ts)中添加了JUDYPLAN到ChatModelProviders枚举
+   - 添加了JudyPlan的ProviderInfo配置和ProviderSettingsKeyMap配置
+   - 在[chatModelManager.ts](mdc:src/LLMProviders/chatModelManager.ts)中添加了JudyPlan的支持
+   - 在[providerModels.ts](mdc:src/settings/providerModels.ts)中添加了JudyPlan的模型响应类型和适配器
+
+主要入口文件是[main.ts](mdc:src/main.ts)，它负责初始化插件和加载设置。
