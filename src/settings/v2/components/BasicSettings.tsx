@@ -20,8 +20,8 @@ import { cn } from "@/lib/utils";
 const ChainType2Label: Record<ChainType, string> = {
   [ChainType.LLM_CHAIN]: "Chat",
   [ChainType.VAULT_QA_CHAIN]: "Vault QA (Basic)",
-  [ChainType.COPILOT_PLUS_CHAIN]: "Copilot Plus (beta)",
-  [ChainType.PROJECT_CHAIN]: "Projects (alpha)",
+  [ChainType.COPILOT_PLUS_CHAIN]: "Advanced Chat (Disabled)",
+  [ChainType.PROJECT_CHAIN]: "Projects (Disabled)",
 };
 
 export const BasicSettings: React.FC = () => {

@@ -164,13 +164,6 @@ export function ChatControls({
             <Button variant="ghost2" size="fit" className="tw-ml-1">
               {selectedChain === ChainType.LLM_CHAIN && "chat"}
               {selectedChain === ChainType.VAULT_QA_CHAIN && "vault QA"}
-              {selectedChain === ChainType.COPILOT_PLUS_CHAIN && (
-                <div className="tw-flex tw-items-center tw-gap-1">
-                  <Sparkles className="tw-size-4" />
-                  copilot plus (beta)
-                </div>
-              )}
-              {selectedChain === ChainType.PROJECT_CHAIN && "projects (alpha)"}
               <ChevronDown className="tw-mt-0.5 tw-size-5" />
             </Button>
           </DropdownMenuTrigger>
@@ -189,50 +182,6 @@ export function ChatControls({
             >
               vault QA
             </DropdownMenuItem>
-            {isPlusUser ? (
-              <DropdownMenuItem
-                onSelect={() => {
-                  handleModeChange(ChainType.COPILOT_PLUS_CHAIN);
-                }}
-              >
-                <div className="tw-flex tw-items-center tw-gap-1">
-                  <Sparkles className="tw-size-4" />
-                  copilot plus (beta)
-                </div>
-              </DropdownMenuItem>
-            ) : (
-              <DropdownMenuItem
-                onSelect={() => {
-                  navigateToPlusPage(PLUS_UTM_MEDIUMS.CHAT_MODE_SELECT);
-                  onCloseProject?.();
-                }}
-              >
-                copilot plus (beta)
-                <SquareArrowOutUpRight className="tw-size-3" />
-              </DropdownMenuItem>
-            )}
-
-            {isPlusUser ? (
-              <DropdownMenuItem
-                className="tw-flex tw-items-center tw-gap-1"
-                onSelect={() => {
-                  handleModeChange(ChainType.PROJECT_CHAIN);
-                }}
-              >
-                <LibraryBig className="tw-size-4" />
-                projects (alpha)
-              </DropdownMenuItem>
-            ) : (
-              <DropdownMenuItem
-                onSelect={() => {
-                  navigateToPlusPage(PLUS_UTM_MEDIUMS.CHAT_MODE_SELECT);
-                  onCloseProject?.();
-                }}
-              >
-                copilot plus (beta)
-                <SquareArrowOutUpRight className="tw-size-3" />
-              </DropdownMenuItem>
-            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
