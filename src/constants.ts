@@ -308,6 +308,12 @@ export const ProviderInfo: Record<Provider, ProviderMetadata> = {
     listModelURL: "https://api.deepseek.com/models",
     testModel: ChatModels.DEEPSEEK_CHAT,
   },
+  [ChatModelProviders.JUDYPLAN]: {
+    label: "JudyPlan",
+    host: "http://jdpl.judyplan.com:4000/v1",
+    keyManagementURL: "",
+    listModelURL: "http://jdpl.judyplan.com:4000/v1/models",
+  },
   [EmbeddingModelProviders.COPILOT_PLUS]: {
     label: "Copilot Plus",
     host: "https://api.brevilabs.com/v1",
@@ -335,6 +341,7 @@ export const ProviderSettingsKeyMap: Record<SettingKeyProviders, keyof CopilotSe
   "copilot-plus": "plusLicenseKey",
   mistralai: "mistralApiKey",
   deepseek: "deepseekApiKey",
+  judyplan: "openAIApiKey",
 };
 
 export enum VAULT_VECTOR_STORE_STRATEGY {

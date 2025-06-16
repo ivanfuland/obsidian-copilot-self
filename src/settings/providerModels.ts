@@ -262,7 +262,7 @@ export interface OpenRouterAIModelResponse {
  "id": "google/gemini-2.5-pro-preview-03-25",
  "name": "Google: Gemini 2.5 Pro Preview",
  "created": 1744924206,
- "description": "Gemini 2.5 Pro is Google’s state-of-the-art AI model designed for advanced reasoning, coding, mathematics, and scientific tasks. It employs “thinking” capabilities, enabling it to reason through responses with enhanced accuracy and nuanced context handling. Gemini 2.5 Pro achieves top-tier performance on multiple benchmarks, including first-place positioning on the LMArena leaderboard, reflecting superior human-preference alignment and complex problem-solving abilities.",
+ "description": "Gemini 2.5 Pro is Google's state-of-the-art AI model designed for advanced reasoning, coding, mathematics, and scientific tasks. It employs "thinking" capabilities, enabling it to reason through responses with enhanced accuracy and nuanced context handling. Gemini 2.5 Pro achieves top-tier performance on multiple benchmarks, including first-place positioning on the LMArena leaderboard, reflecting superior human-preference alignment and complex problem-solving abilities.",
  "context_length": 1048576,
  "architecture": {
  "modality": "text+image->text",
@@ -333,6 +333,7 @@ export interface ProviderResponseMap {
   [ChatModelProviders.GROQ]: GroqModelResponse;
   [ChatModelProviders.XAI]: XAIModelResponse;
   [ChatModelProviders.OPENROUTERAI]: OpenRouterAIModelResponse;
+  [ChatModelProviders.JUDYPLAN]: OpenAIModelResponse;
   [ChatModelProviders.COPILOT_PLUS]: null;
   [ChatModelProviders.AZURE_OPENAI]: null;
 }
@@ -417,6 +418,13 @@ export const providerAdapters: ProviderModelAdapters = {
       id: model.id,
       name: model.id,
       provider: ChatModelProviders.OPENROUTERAI,
+    })) || [],
+
+  [ChatModelProviders.JUDYPLAN]: (data): StandardModel[] =>
+    data.data?.map((model) => ({
+      id: model.id,
+      name: model.id,
+      provider: ChatModelProviders.JUDYPLAN,
     })) || [],
 };
 

@@ -41,6 +41,7 @@ const CHAT_PROVIDER_CONSTRUCTORS = {
   [ChatModelProviders.COPILOT_PLUS]: ChatOpenAI,
   [ChatModelProviders.MISTRAL]: ChatMistralAI,
   [ChatModelProviders.DEEPSEEK]: ChatDeepSeek,
+  [ChatModelProviders.JUDYPLAN]: ChatOpenAI,
 } as const;
 
 type ChatProviderConstructMap = typeof CHAT_PROVIDER_CONSTRUCTORS;
@@ -72,6 +73,7 @@ export default class ChatModelManager {
     [ChatModelProviders.COPILOT_PLUS]: () => getSettings().plusLicenseKey,
     [ChatModelProviders.MISTRAL]: () => getSettings().mistralApiKey,
     [ChatModelProviders.DEEPSEEK]: () => getSettings().deepseekApiKey,
+    [ChatModelProviders.JUDYPLAN]: () => getSettings().openAIApiKey,
   } as const;
 
   private constructor() {
@@ -249,6 +251,16 @@ export default class ChatModelManager {
           baseURL: customModel.baseUrl || ProviderInfo[ChatModelProviders.DEEPSEEK].host,
           fetch: customModel.enableCors ? safeFetch : undefined,
         },
+      },
+      [ChatModelProviders.JUDYPLAN]: {
+        modelName: modelName,
+        openAIApiKey: await getDecryptedKey(customModel.apiKey || settings.openAIApiKey),
+        configuration: {
+          baseURL: customModel.baseUrl || ProviderInfo[ChatModelProviders.JUDYPLAN].host,
+          fetch: customModel.enableCors ? safeFetch : undefined,
+          defaultHeaders: { "dangerously-allow-browser": "true" },
+        },
+        ...this.handleOpenAIExtraArgs(isOSeries, settings.maxTokens, settings.temperature),
       },
     };
 
