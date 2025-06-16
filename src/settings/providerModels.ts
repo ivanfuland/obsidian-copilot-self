@@ -333,7 +333,6 @@ export interface ProviderResponseMap {
   [ChatModelProviders.GROQ]: GroqModelResponse;
   [ChatModelProviders.XAI]: XAIModelResponse;
   [ChatModelProviders.OPENROUTERAI]: OpenRouterAIModelResponse;
-  [ChatModelProviders.JUDYPLAN]: OpenAIModelResponse;
   [ChatModelProviders.COPILOT_PLUS]: null;
   [ChatModelProviders.AZURE_OPENAI]: null;
 }
@@ -420,12 +419,7 @@ export const providerAdapters: ProviderModelAdapters = {
       provider: ChatModelProviders.OPENROUTERAI,
     })) || [],
 
-  [ChatModelProviders.JUDYPLAN]: (data): StandardModel[] =>
-    data.data?.map((model) => ({
-      id: model.id,
-      name: model.id,
-      provider: ChatModelProviders.JUDYPLAN,
-    })) || [],
+
 };
 
 /**

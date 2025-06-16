@@ -149,7 +149,6 @@ export enum ChatModelProviders {
   COPILOT_PLUS = "copilot-plus",
   MISTRAL = "mistralai",
   DEEPSEEK = "deepseek",
-  JUDYPLAN = "judyplan",
 }
 
 export enum ModelCapability {
@@ -178,7 +177,6 @@ export enum EmbeddingModelProviders {
   OPENAI_FORMAT = "3rd party (openai-format)",
   COPILOT_PLUS = "copilot-plus",
   COPILOT_PLUS_JINA = "copilot-plus-jina",
-  JUDYPLAN = "judyplan",
 }
 
 export enum EmbeddingModels {
@@ -309,12 +307,7 @@ export const ProviderInfo: Record<Provider, ProviderMetadata> = {
     listModelURL: "https://api.deepseek.com/models",
     testModel: ChatModels.DEEPSEEK_CHAT,
   },
-  [ChatModelProviders.JUDYPLAN]: {
-    label: "JudyPlan",
-    host: "http://jdpl.judyplan.com:4000/v1",
-    keyManagementURL: "",
-    listModelURL: "http://jdpl.judyplan.com:4000/v1/models",
-  },
+
   [EmbeddingModelProviders.COPILOT_PLUS]: {
     label: "Copilot Plus",
     host: "https://api.brevilabs.com/v1",
@@ -342,7 +335,7 @@ export const ProviderSettingsKeyMap: Record<SettingKeyProviders, keyof CopilotSe
   "copilot-plus": "plusLicenseKey",
   mistralai: "mistralApiKey",
   deepseek: "deepseekApiKey",
-  judyplan: "judyplanApiKey",
+
 };
 
 export enum VAULT_VECTOR_STORE_STRATEGY {
@@ -443,7 +436,6 @@ export const DEFAULT_SETTINGS: CopilotSettings = {
   xaiApiKey: "",
   mistralApiKey: "",
   deepseekApiKey: "",
-  judyplanApiKey: "",
   defaultChainType: ChainType.LLM_CHAIN,
   defaultModelKey: ChatModels.GPT_41 + "|" + ChatModelProviders.OPENAI,
   embeddingModelKey: EmbeddingModels.OPENAI_EMBEDDING_SMALL + "|" + EmbeddingModelProviders.OPENAI,

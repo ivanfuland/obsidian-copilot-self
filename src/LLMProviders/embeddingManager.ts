@@ -26,7 +26,6 @@ const EMBEDDING_PROVIDER_CONSTRUCTORS = {
   [EmbeddingModelProviders.OLLAMA]: OllamaEmbeddings,
   [EmbeddingModelProviders.LM_STUDIO]: OpenAIEmbeddings,
   [EmbeddingModelProviders.OPENAI_FORMAT]: OpenAIEmbeddings,
-  [EmbeddingModelProviders.JUDYPLAN]: OpenAIEmbeddings,
 } as const;
 
 type EmbeddingProviderConstructorMap = typeof EMBEDDING_PROVIDER_CONSTRUCTORS;
@@ -54,7 +53,6 @@ export default class EmbeddingManager {
     [EmbeddingModelProviders.OLLAMA]: () => "default-key",
     [EmbeddingModelProviders.LM_STUDIO]: () => "default-key",
     [EmbeddingModelProviders.OPENAI_FORMAT]: () => "",
-    [EmbeddingModelProviders.JUDYPLAN]: () => getSettings().judyplanApiKey,
   };
 
   private constructor() {
@@ -264,20 +262,7 @@ export default class EmbeddingManager {
           dangerouslyAllowBrowser: true,
         },
       },
-      [EmbeddingModelProviders.JUDYPLAN]: {
-        modelName,
-        openAIApiKey: await getDecryptedKey(customModel.apiKey || settings.judyplanApiKey),
-        batchSize: getSettings().embeddingBatchSize,
-        configuration: {
-          baseURL: customModel.baseUrl || "http://jdpl.judyplan.com:4000/v1",
-          fetch: safeFetch, // 始终使用safeFetch，不考虑enableCors设置
-          defaultHeaders: { 
-            "dangerously-allow-browser": "true",
-            "Access-Control-Allow-Origin": "*"
-          },
-          dangerouslyAllowBrowser: true,
-        },
-      },
+
     };
 
     const selectedProviderConfig =
@@ -287,33 +272,7 @@ export default class EmbeddingManager {
   }
 
   async ping(model: CustomModel): Promise<boolean> {
-    // 特殊处理JudyPlan模型
-    if (model.provider === EmbeddingModelProviders.JUDYPLAN) {
-      try {
-        // 对于JudyPlan，我们始终使用CORS
-        const modelToTest = { ...model, enableCors: true };
-        const config = await this.getEmbeddingConfig(modelToTest);
-        // 确保baseURL正确设置
-        if (!config.configuration.baseURL) {
-          config.configuration.baseURL = "http://jdpl.judyplan.com:4000/v1";
-        }
-        // 确保headers正确设置
-        config.configuration.defaultHeaders = { 
-          "dangerously-allow-browser": "true",
-          "Access-Control-Allow-Origin": "*"
-        };
-        config.configuration.fetch = safeFetch;
-        
-        const testModel = new (this.getProviderConstructor(modelToTest))(config);
-        await testModel.embedQuery("test");
-        return true;
-      } catch (error) {
-        console.error("JudyPlan ping error:", error);
-        throw new Error("JudyPlan连接失败: " + err2String(error));
-      }
-    }
-    
-    // 其他模型使用原来的逻辑
+    // 模型连接测试逻辑
     const tryPing = async (enableCors: boolean) => {
       const modelToTest = { ...model, enableCors };
       const config = await this.getEmbeddingConfig(modelToTest);
