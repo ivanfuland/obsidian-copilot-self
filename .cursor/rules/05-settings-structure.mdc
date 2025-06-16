@@ -1,0 +1,59 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Obsidian Copilot 设置结构
+
+Obsidian Copilot 插件的设置系统使用 Jotai 进行状态管理，本文档描述了设置的结构和管理方式。
+
+## 设置定义
+
+设置定义在 [src/settings/model.ts](mdc:src/settings/model.ts) 中的 `CopilotSettings` 接口：
+
+```typescript
+export interface CopilotSettings {
+  userId: string;
+  plusLicenseKey: string;
+  openAIApiKey: string;
+  // 其他 API 密钥...
+  defaultChainType: ChainType;
+  defaultModelKey: string;
+  embeddingModelKey: string;
+  temperature: number;
+  maxTokens: number;
+  // 其他设置...
+}
+```
+
+## 设置管理
+
+- 设置存储: [src/settings/model.ts](mdc:src/settings/model.ts) 中的 `settingsStore` 和 `settingsAtom`
+- 获取设置: `getSettings()`
+- 更新设置: `setSettings()` 和 `updateSetting()`
+- 订阅设置变化: `subscribeToSettingsChange()`
+- 使用设置 Hook: `useSettingsValue()`
+
+## 设置页面
+
+- 设置标签页: [src/settings/SettingsPage.tsx](mdc:src/settings/SettingsPage.tsx)
+- 设置 UI: [src/settings/v2/](mdc:src/settings/v2/) 目录下的组件
+
+## 默认设置
+
+默认设置定义在 [src/constants.ts](mdc:src/constants.ts) 中的 `DEFAULT_SETTINGS` 常量：
+
+```typescript
+export const DEFAULT_SETTINGS: CopilotSettings = {
+  userId: "",
+  plusLicenseKey: "",
+  openAIApiKey: "",
+  // 其他默认值...
+};
+```
+
+## 设置加密
+
+- 加密服务: [src/encryptionService.ts](mdc:src/encryptionService.ts)
+- 加密所有密钥: `encryptAllKeys()`
+- 解密密钥: `decryptKey()`

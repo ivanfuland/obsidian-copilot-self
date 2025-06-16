@@ -1,0 +1,28 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Obsidian Copilot 项目概览
+
+Obsidian Copilot 是一个为 Obsidian 笔记应用设计的 AI 助手插件。它能够帮助用户通过 AI 技术更有效地管理和利用他们的知识库。
+
+## 核心文件
+
+- 插件入口点: [src/main.ts](mdc:src/main.ts) - 包含插件的主要类和初始化逻辑
+- 插件配置: [manifest.json](mdc:manifest.json) - 定义插件的基本信息
+- 常量定义: [src/constants.ts](mdc:src/constants.ts) - 包含插件使用的所有常量
+- 设置模型: [src/settings/model.ts](mdc:src/settings/model.ts) - 定义插件设置的数据结构和操作
+
+## 主要组件
+
+- 聊天视图: [src/components/CopilotView.tsx](mdc:src/components/CopilotView.tsx) - 插件的主视图
+- 聊天组件: [src/components/Chat.tsx](mdc:src/components/Chat.tsx) - 处理聊天界面和交互
+- 共享状态: [src/sharedState.ts](mdc:src/sharedState.ts) - 管理插件的共享状态
+
+## 功能模块
+
+- AI 参数: [src/aiParams.ts](mdc:src/aiParams.ts) - 管理 AI 模型参数
+- 向量存储: [src/search/vectorStoreManager.ts](mdc:src/search/vectorStoreManager.ts) - 管理笔记的向量索引
+- 链工厂: [src/chainFactory.ts](mdc:src/chainFactory.ts) - 创建不同类型的 AI 处理链
+- 工具管理: [src/tools/FileParserManager.ts](mdc:src/tools/FileParserManager.ts) - 处理文件解析

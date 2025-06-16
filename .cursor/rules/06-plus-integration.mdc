@@ -1,0 +1,44 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Obsidian Copilot Plus 集成
+
+Obsidian Copilot 插件提供了免费版和 Plus 版功能，本文档描述了 Plus 版的集成方式。
+
+## Plus 功能检查
+
+- Plus 用户检查: [src/plusUtils.ts](mdc:src/plusUtils.ts) 中的 `checkIsPlusUser()` 和 `useIsPlusUser()`
+- Plus 功能标记: [src/constants.ts](mdc:src/constants.ts) 中的模型定义包含 `plusExclusive` 标志
+
+## Brevilabs 客户端
+
+Brevilabs 是 Copilot Plus 的后端服务提供商：
+
+- 客户端实现: [src/LLMProviders/brevilabsClient.ts](mdc:src/LLMProviders/brevilabsClient.ts)
+- API 基础 URL: [src/constants.ts](mdc:src/constants.ts) 中的 `BREVILABS_API_BASE_URL`
+
+## Plus 专属功能
+
+1. **AI 代理能力**
+   - 意图分析: [src/LLMProviders/intentAnalyzer.ts](mdc:src/LLMProviders/intentAnalyzer.ts)
+   - 工具集成: [src/tools/](mdc:src/tools/) 目录
+
+2. **多媒体支持**
+   - 图像处理: [src/imageProcessing/](mdc:src/imageProcessing/) 目录
+   - PDF 支持: [src/tools/FileParserManager.ts](mdc:src/tools/FileParserManager.ts)
+
+3. **增强聊天 UI**
+   - 上下文菜单: [src/contextMenu.ts](mdc:src/contextMenu.ts)
+   - 增强的聊天组件: [src/components/chat-components/](mdc:src/components/chat-components/) 目录
+
+4. **专属工具**
+   - Web 搜索: `@websearch` 工具
+   - YouTube 摘要: `@youtube` 工具
+   - 其他工具: [src/mentions/](mdc:src/mentions/) 目录下的实现
+
+## 许可证管理
+
+- 许可证密钥存储: [src/settings/model.ts](mdc:src/settings/model.ts) 中的 `plusLicenseKey` 设置
+- 许可证验证: [src/plusUtils.ts](mdc:src/plusUtils.ts) 中的验证逻辑

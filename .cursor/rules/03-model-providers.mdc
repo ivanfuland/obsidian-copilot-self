@@ -1,0 +1,45 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Obsidian Copilot 模型提供商
+
+Obsidian Copilot 支持多种 AI 模型提供商，本文档描述了相关的模型集成。
+
+## 模型类型
+
+插件支持两种主要类型的模型：
+1. 聊天模型 - 用于生成文本响应
+2. 嵌入模型 - 用于将文本转换为向量以进行语义搜索
+
+## 支持的提供商
+
+聊天模型提供商定义在 [src/constants.ts](mdc:src/constants.ts) 中的 `ChatModelProviders` 枚举：
+- OpenAI
+- Azure OpenAI
+- Anthropic (Claude)
+- Google (Gemini)
+- Cohere
+- Mistral
+- DeepSeek
+- XAI (Grok)
+- OpenRouter
+- Groq
+- Ollama (本地模型)
+- LM Studio (本地模型)
+- Copilot Plus (内置服务)
+
+嵌入模型提供商定义在 [src/constants.ts](mdc:src/constants.ts) 中的 `EmbeddingModelProviders` 枚举。
+
+## 模型集成
+
+- 模型定义: [src/constants.ts](mdc:src/constants.ts) 中的 `BUILTIN_CHAT_MODELS` 和 `BUILTIN_EMBEDDING_MODELS`
+- 模型参数: [src/aiParams.ts](mdc:src/aiParams.ts) 中的 `CustomModel` 接口
+- 提供商客户端: [src/LLMProviders/](mdc:src/LLMProviders/) 目录下的各个客户端实现
+
+## 模型使用流程
+
+1. 用户在设置中配置模型和 API 密钥
+2. 通过 [src/chainFactory.ts](mdc:src/chainFactory.ts) 创建适当的处理链
+3. 处理链使用配置的模型处理用户输入并生成响应

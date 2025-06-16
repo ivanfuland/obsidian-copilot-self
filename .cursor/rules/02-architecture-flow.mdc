@@ -1,0 +1,36 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Obsidian Copilot 架构流程
+
+本文档描述了 Obsidian Copilot 插件的架构和主要数据流。
+
+## 插件初始化流程
+
+1. [src/main.ts](mdc:src/main.ts) 中的 `CopilotPlugin` 类是插件的入口点
+2. `onload()` 方法初始化插件，加载设置，创建共享状态
+3. 初始化核心服务：`BrevilabsClient`, `ProjectManager`, `FileParserManager`, `VectorStoreManager`
+4. 注册视图、命令和事件处理器
+
+## 聊天流程
+
+1. 用户在 [src/components/Chat.tsx](mdc:src/components/Chat.tsx) 中输入消息
+2. 消息通过 `handleSendMessage()` 函数处理
+3. 上下文处理器 [src/contextProcessor.ts](mdc:src/contextProcessor.ts) 添加相关上下文
+4. 自定义提示处理器 [src/customPromptProcessor.ts](mdc:src/customPromptProcessor.ts) 处理特殊提示语法
+5. 通过 [src/langchainStream.ts](mdc:src/langchainStream.ts) 中的 `getAIResponse()` 获取 AI 响应
+6. 响应通过 `handleAIResponse()` 处理并显示
+
+## 向量搜索流程
+
+1. 通过 [src/search/vectorStoreManager.ts](mdc:src/search/vectorStoreManager.ts) 管理笔记索引
+2. 使用 [src/search/hybridRetriever.ts](mdc:src/search/hybridRetriever.ts) 结合向量搜索和关键词搜索
+3. 查询结果作为上下文提供给 AI 模型
+
+## 设置管理
+
+1. 设置定义在 [src/settings/model.ts](mdc:src/settings/model.ts) 中
+2. 设置通过 `getSettings()`, `setSettings()`, `updateSetting()` 函数管理
+3. 使用 `subscribeToSettingsChange()` 监听设置变化

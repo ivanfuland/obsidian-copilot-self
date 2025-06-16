@@ -1,0 +1,43 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Obsidian Copilot 功能模块
+
+Obsidian Copilot 插件包含多个功能模块，本文档描述了主要的功能模块及其实现。
+
+## 聊天功能
+
+- 主视图: [src/components/CopilotView.tsx](mdc:src/components/CopilotView.tsx)
+- 聊天组件: [src/components/Chat.tsx](mdc:src/components/Chat.tsx)
+- 聊天消息: [src/components/chat-components/ChatMessages.tsx](mdc:src/components/chat-components/ChatMessages.tsx)
+- 聊天输入: [src/components/chat-components/ChatInput.tsx](mdc:src/components/chat-components/ChatInput.tsx)
+
+## Vault QA 功能
+
+- 向量存储管理: [src/search/vectorStoreManager.ts](mdc:src/search/vectorStoreManager.ts)
+- 混合检索器: [src/search/hybridRetriever.ts](mdc:src/search/hybridRetriever.ts)
+- 上下文处理: [src/contextProcessor.ts](mdc:src/contextProcessor.ts)
+
+## 提示面板功能
+
+- 自定义提示处理: [src/customPromptProcessor.ts](mdc:src/customPromptProcessor.ts)
+- 提示使用策略: [src/promptUsageStrategy.ts](mdc:src/promptUsageStrategy.ts)
+
+## 多媒体处理功能
+
+- 文件解析管理: [src/tools/FileParserManager.ts](mdc:src/tools/FileParserManager.ts)
+- 图像处理: [src/imageProcessing/](mdc:src/imageProcessing/) 目录
+- 提及处理 (URLs, YouTube): [src/mentions/](mdc:src/mentions/) 目录
+
+## 自动完成功能
+
+- 自动完成服务: [src/autocomplete/autocompleteService.ts](mdc:src/autocomplete/autocompleteService.ts)
+- CodeMirror 集成: [src/autocomplete/codemirrorIntegration.ts](mdc:src/autocomplete/codemirrorIntegration.ts)
+
+## 项目管理
+
+- 项目管理器: [src/LLMProviders/projectManager.ts](mdc:src/LLMProviders/projectManager.ts)
+- 链管理器: [src/LLMProviders/chainManager.ts](mdc:src/LLMProviders/chainManager.ts)
+- 项目配置: [src/aiParams.ts](mdc:src/aiParams.ts) 中的 `ProjectConfig` 接口

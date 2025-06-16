@@ -1,0 +1,50 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Obsidian Copilot 开发指南
+
+本文档提供了 Obsidian Copilot 插件的开发指南，帮助开发者理解代码结构和开发流程。
+
+## 项目设置
+
+- 构建配置: [esbuild.config.mjs](mdc:esbuild.config.mjs) - 使用 esbuild 打包插件
+- TypeScript 配置: [tsconfig.json](mdc:tsconfig.json) - TypeScript 编译器配置
+- Tailwind 配置: [tailwind.config.js](mdc:tailwind.config.js) - UI 样式配置
+- 组件配置: [components.json](mdc:components.json) - UI 组件配置
+
+## 代码风格和规范
+
+- ESLint 配置: [.eslintrc](mdc:.eslintrc) - 代码质量检查规则
+- Prettier 配置: [.prettierrc](mdc:.prettierrc) - 代码格式化规则
+- 编辑器配置: [.editorconfig](mdc:.editorconfig) - 编辑器一致性配置
+
+## 测试
+
+- Jest 配置: [jest.config.js](mdc:jest.config.js) - 测试框架配置
+- Jest 设置: [jest.setup.js](mdc:jest.setup.js) - 测试环境设置
+- 测试文件: [src/tests/](mdc:src/tests/) 目录和各个 `.test.ts` 文件
+
+## 版本管理
+
+- 版本信息: [versions.json](mdc:versions.json) - 插件版本历史
+- 版本升级脚本: [version-bump.mjs](mdc:version-bump.mjs) - 自动升级版本号
+
+## 贡献指南
+
+详细的贡献指南可以在 [CONTRIBUTING.md](mdc:CONTRIBUTING.md) 文件中找到，包括：
+
+- 开发环境设置
+- 代码风格指南
+- 提交规范
+- 测试要求
+- 发布流程
+
+## 本地开发
+
+本地开发指南可以在 [local_copilot.md](mdc:local_copilot.md) 文件中找到，包括：
+
+- 本地设置说明
+- 调试技巧
+- 常见问题解决方案
