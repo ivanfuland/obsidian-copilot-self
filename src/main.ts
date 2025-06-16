@@ -69,7 +69,13 @@ export default class CopilotPlugin extends Plugin {
     // Initialize BrevilabsClient
     this.brevilabsClient = BrevilabsClient.getInstance();
     this.brevilabsClient.setPluginVersion(this.manifest.version);
-    checkIsPlusUser();
+
+    // 确保启用Plus功能
+    // 原代码: checkIsPlusUser();
+    // 直接调用turnOnPlus确保Plus功能开启
+    import("@/plusUtils").then(({ turnOnPlus }) => {
+      turnOnPlus();
+    });
 
     // Initialize ProjectManager
     this.projectManager = ProjectManager.getInstance(this.app, this.vectorStoreManager, this);

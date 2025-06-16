@@ -517,16 +517,6 @@ export const ModelTable: React.FC<ModelTableProps> = ({
       {renderMobileView()}
 
       <div className="tw-mt-4 tw-flex tw-justify-end tw-gap-2">
-        {onRefresh && (
-          <Button
-            onClick={onRefresh}
-            variant="secondary"
-            className="tw-flex tw-items-center tw-gap-2"
-          >
-            <RefreshCw className="tw-size-4" />
-            Refresh Built-in Models
-          </Button>
-        )}
         <Button onClick={onAdd} variant="secondary" className="tw-flex tw-items-center tw-gap-2">
           <Plus className="tw-size-4" />
           Add Custom Model

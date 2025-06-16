@@ -82,30 +82,6 @@ export const ModelSettings: React.FC = () => {
     updateSetting("activeEmbeddingModels", newModels);
   };
 
-  const handleRefreshChatModels = () => {
-    // Get all custom models (non-built-in models)
-    const customModels = settings.activeModels.filter((model) => !model.isBuiltIn);
-
-    // Create a new array with built-in models and custom models
-    const updatedModels = [...BUILTIN_CHAT_MODELS, ...customModels];
-
-    // Update the settings
-    updateSetting("activeModels", updatedModels);
-    new Notice("Chat models refreshed successfully");
-  };
-
-  const handleRefreshEmbeddingModels = () => {
-    // Get all custom models (non-built-in models)
-    const customModels = settings.activeEmbeddingModels.filter((model) => !model.isBuiltIn);
-
-    // Create a new array with built-in models and custom models
-    const updatedModels = [...BUILTIN_EMBEDDING_MODELS, ...customModels];
-
-    // Update the settings
-    updateSetting("activeEmbeddingModels", updatedModels);
-    new Notice("Embedding models refreshed successfully");
-  };
-
   return (
     <div className="tw-space-y-4">
       <section>
@@ -117,7 +93,6 @@ export const ModelSettings: React.FC = () => {
           onAdd={() => setShowAddDialog(true)}
           onUpdateModel={handleTableUpdate}
           onReorderModels={handleModelReorder}
-          onRefresh={handleRefreshChatModels}
           title="Chat Model"
         />
 
@@ -196,7 +171,6 @@ export const ModelSettings: React.FC = () => {
           onAdd={() => setShowAddEmbeddingDialog(true)}
           onUpdateModel={handleEmbeddingModelUpdate}
           onReorderModels={handleEmbeddingModelReorder}
-          onRefresh={handleRefreshEmbeddingModels}
           title="Embedding Model"
         />
 

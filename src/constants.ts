@@ -149,6 +149,7 @@ export enum ChatModelProviders {
   COPILOT_PLUS = "copilot-plus",
   MISTRAL = "mistralai",
   DEEPSEEK = "deepseek",
+  JUDYPLAN = "judyplan",
 }
 
 export enum ModelCapability {
@@ -164,137 +165,7 @@ export const MODEL_CAPABILITIES: Record<ModelCapability, string> = {
 };
 
 export const BUILTIN_CHAT_MODELS: CustomModel[] = [
-  {
-    name: ChatModels.COPILOT_PLUS_FLASH,
-    provider: ChatModelProviders.COPILOT_PLUS,
-    enabled: true,
-    isBuiltIn: true,
-    core: true,
-    plusExclusive: true,
-    projectEnabled: false,
-    capabilities: [ModelCapability.VISION],
-  },
-  {
-    name: ChatModels.GPT_41,
-    provider: ChatModelProviders.OPENAI,
-    enabled: true,
-    isBuiltIn: true,
-    core: true,
-    projectEnabled: true,
-    capabilities: [ModelCapability.VISION],
-  },
-  {
-    name: ChatModels.GPT_41_mini,
-    provider: ChatModelProviders.OPENAI,
-    enabled: true,
-    isBuiltIn: true,
-    core: true,
-    projectEnabled: true,
-    capabilities: [ModelCapability.VISION],
-  },
-  {
-    name: ChatModels.GPT_41_nano,
-    provider: ChatModelProviders.OPENAI,
-    enabled: true,
-    isBuiltIn: true,
-    core: true,
-    capabilities: [ModelCapability.VISION],
-  },
-  {
-    name: ChatModels.O4_mini,
-    provider: ChatModelProviders.OPENAI,
-    enabled: true,
-    isBuiltIn: true,
-    core: true,
-    capabilities: [ModelCapability.REASONING],
-  },
-  {
-    name: ChatModels.CLAUDE_4_SONNET,
-    provider: ChatModelProviders.ANTHROPIC,
-    enabled: true,
-    isBuiltIn: true,
-    capabilities: [ModelCapability.VISION, ModelCapability.REASONING],
-  },
-  {
-    name: ChatModels.CLAUDE_3_7_SONNET,
-    provider: ChatModelProviders.ANTHROPIC,
-    enabled: true,
-    isBuiltIn: true,
-    capabilities: [ModelCapability.VISION, ModelCapability.REASONING],
-  },
-  {
-    name: ChatModels.CLAUDE_3_5_SONNET,
-    provider: ChatModelProviders.ANTHROPIC,
-    enabled: true,
-    isBuiltIn: true,
-    core: true,
-    capabilities: [ModelCapability.VISION],
-  },
-  {
-    name: ChatModels.CLAUDE_3_5_HAIKU,
-    provider: ChatModelProviders.ANTHROPIC,
-    enabled: true,
-    isBuiltIn: true,
-  },
-  {
-    name: ChatModels.GROK3,
-    provider: ChatModelProviders.XAI,
-    enabled: true,
-    isBuiltIn: true,
-  },
-  {
-    name: ChatModels.GROK3_MINI,
-    provider: ChatModelProviders.XAI,
-    enabled: true,
-    isBuiltIn: true,
-  },
-  {
-    name: ChatModels.GEMINI_FLASH,
-    provider: ChatModelProviders.GOOGLE,
-    enabled: true,
-    isBuiltIn: true,
-    projectEnabled: true,
-    capabilities: [ModelCapability.VISION],
-  },
-  {
-    name: ChatModels.GEMINI_PRO,
-    provider: ChatModelProviders.GOOGLE,
-    enabled: true,
-    isBuiltIn: true,
-    projectEnabled: true,
-    capabilities: [ModelCapability.VISION],
-  },
-  {
-    name: ChatModels.COMMAND_R,
-    provider: ChatModelProviders.COHEREAI,
-    enabled: true,
-    isBuiltIn: true,
-  },
-  {
-    name: ChatModels.COMMAND_R_PLUS,
-    provider: ChatModelProviders.COHEREAI,
-    enabled: true,
-    isBuiltIn: true,
-  },
-  {
-    name: ChatModels.AZURE_OPENAI,
-    provider: ChatModelProviders.AZURE_OPENAI,
-    enabled: true,
-    isBuiltIn: true,
-  },
-  {
-    name: ChatModels.DEEPSEEK_CHAT,
-    provider: ChatModelProviders.DEEPSEEK,
-    enabled: true,
-    isBuiltIn: true,
-  },
-  {
-    name: ChatModels.DEEPSEEK_REASONER,
-    provider: ChatModelProviders.DEEPSEEK,
-    enabled: true,
-    isBuiltIn: true,
-    capabilities: [ModelCapability.REASONING],
-  },
+  // 已清空所有内置聊天模型
 ];
 
 export enum EmbeddingModelProviders {
@@ -322,72 +193,7 @@ export enum EmbeddingModels {
 }
 
 export const BUILTIN_EMBEDDING_MODELS: CustomModel[] = [
-  {
-    name: EmbeddingModels.COPILOT_PLUS_SMALL,
-    provider: EmbeddingModelProviders.COPILOT_PLUS,
-    enabled: true,
-    isBuiltIn: true,
-    isEmbeddingModel: true,
-    core: true,
-    plusExclusive: true,
-  },
-  {
-    name: EmbeddingModels.COPILOT_PLUS_LARGE,
-    provider: EmbeddingModelProviders.COPILOT_PLUS_JINA,
-    enabled: true,
-    isBuiltIn: true,
-    isEmbeddingModel: true,
-    core: true,
-    plusExclusive: true,
-    believerExclusive: true,
-    dimensions: 1024,
-  },
-  {
-    name: EmbeddingModels.COPILOT_PLUS_MULTILINGUAL,
-    provider: EmbeddingModelProviders.COPILOT_PLUS_JINA,
-    enabled: true,
-    isBuiltIn: true,
-    isEmbeddingModel: true,
-    core: true,
-    plusExclusive: true,
-    dimensions: 512,
-  },
-  {
-    name: EmbeddingModels.OPENAI_EMBEDDING_SMALL,
-    provider: EmbeddingModelProviders.OPENAI,
-    enabled: true,
-    isBuiltIn: true,
-    isEmbeddingModel: true,
-    core: true,
-  },
-  {
-    name: EmbeddingModels.OPENAI_EMBEDDING_LARGE,
-    provider: EmbeddingModelProviders.OPENAI,
-    enabled: true,
-    isBuiltIn: true,
-    isEmbeddingModel: true,
-  },
-  {
-    name: EmbeddingModels.COHEREAI_EMBED_MULTILINGUAL_LIGHT_V3_0,
-    provider: EmbeddingModelProviders.COHEREAI,
-    enabled: true,
-    isBuiltIn: true,
-    isEmbeddingModel: true,
-  },
-  {
-    name: EmbeddingModels.GOOGLE_ENG,
-    provider: EmbeddingModelProviders.GOOGLE,
-    enabled: true,
-    isBuiltIn: true,
-    isEmbeddingModel: true,
-  },
-  {
-    name: EmbeddingModels.AZURE_OPENAI,
-    provider: EmbeddingModelProviders.AZURE_OPENAI,
-    enabled: true,
-    isBuiltIn: true,
-    isEmbeddingModel: true,
-  },
+  // 已清空所有内置嵌入模型
 ];
 
 // Embedding Models
@@ -655,8 +461,8 @@ export const DEFAULT_SETTINGS: CopilotSettings = {
   enableEncryption: false,
   maxSourceChunks: 3,
   groqApiKey: "",
-  activeModels: BUILTIN_CHAT_MODELS,
-  activeEmbeddingModels: BUILTIN_EMBEDDING_MODELS,
+  activeModels: [],
+  activeEmbeddingModels: [],
   embeddingRequestsPerMin: 90,
   embeddingBatchSize: 16,
   disableIndexOnMobile: true,

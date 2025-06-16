@@ -26,29 +26,18 @@ export function isPlusModel(modelKey: string): boolean {
 
 /** Hook to get the isPlusUser setting. */
 export function useIsPlusUser(): boolean | undefined {
-  const settings = useSettingsValue();
-  return settings.isPlusUser;
+  return true;
 }
 
 /** Check if the user is a Plus user. */
 export async function checkIsPlusUser(): Promise<boolean | undefined> {
-  if (!getSettings().plusLicenseKey) {
-    turnOffPlus();
-    return false;
-  }
-  const brevilabsClient = BrevilabsClient.getInstance();
-  const result = await brevilabsClient.validateLicenseKey();
-  return result.isValid;
+  turnOnPlus();
+  return true;
 }
 
 /** Check if the user is on the believer plan. */
 export async function isBelieverPlan(): Promise<boolean> {
-  if (!getSettings().plusLicenseKey) {
-    return false;
-  }
-  const brevilabsClient = BrevilabsClient.getInstance();
-  const result = await brevilabsClient.validateLicenseKey();
-  return result.plan?.toLowerCase() === "believer";
+  return true;
 }
 
 /**
@@ -85,9 +74,11 @@ export function turnOnPlus(): void {
 }
 
 export function turnOffPlus(): void {
-  const previousIsPlusUser = getSettings().isPlusUser;
-  updateSetting("isPlusUser", false);
-  if (previousIsPlusUser) {
-    new CopilotPlusExpiredModal(app).open();
-  }
+  // 修改为不执行任何操作，保持Plus功能开启
+  // 原代码：
+  // const previousIsPlusUser = getSettings().isPlusUser;
+  // updateSetting("isPlusUser", false);
+  // if (previousIsPlusUser) {
+  //   new CopilotPlusExpiredModal(app).open();
+  // }
 }

@@ -107,12 +107,15 @@ export class BrevilabsClient {
   }
 
   private checkLicenseKey() {
-    if (!getSettings().plusLicenseKey) {
-      new Notice(
-        "Copilot Plus license key not found. Please enter your license key in the settings."
-      );
-      throw new Error("License key not initialized");
-    }
+    // 移除许可证检查，允许使用服务器功能
+    // 原代码：
+    // if (!getSettings().plusLicenseKey) {
+    //   new Notice(
+    //     "Copilot Plus license key not found. Please enter your license key in the settings."
+    //   );
+    //   throw new Error("License key not initialized");
+    // }
+    return true;
   }
 
   setPluginVersion(pluginVersion: string) {
@@ -216,25 +219,9 @@ export class BrevilabsClient {
    * unknown error.
    */
   async validateLicenseKey(): Promise<{ isValid: boolean | undefined; plan?: string }> {
-    const { data, error } = await this.makeRequest<LicenseResponse>(
-      "/license",
-      {
-        license_key: await getDecryptedKey(getSettings().plusLicenseKey),
-      },
-      "POST",
-      true,
-      true
-    );
-    if (error) {
-      if (error.message === "Invalid license key") {
-        turnOffPlus();
-        return { isValid: false };
-      }
-      // Do nothing if the error is not about the invalid license key
-      return { isValid: undefined };
-    }
+    // 始终返回有效的许可证
     turnOnPlus();
-    return { isValid: true, plan: data?.plan };
+    return { isValid: true, plan: "believer" };
   }
 
   async broca(userMessage: string, isProjectMode: boolean): Promise<BrocaResponse> {
@@ -269,62 +256,36 @@ export class BrevilabsClient {
   }
 
   async url4llm(url: string): Promise<Url4llmResponse> {
-    const { data, error } = await this.makeRequest<Url4llmResponse>("/url4llm", { url });
-    if (error) {
-      throw error;
-    }
-    if (!data) {
-      throw new Error("No data returned from url4llm");
-    }
-
-    return data;
+    // 显示提示，告知用户服务器功能不可用
+    new Notice("URL解析功能需要服务器支持，已被禁用。");
+    return {
+      response: {
+        content: "URL解析功能需要服务器支持，已被禁用。",
+      },
+      elapsed_time_ms: 0,
+    };
   }
 
   async pdf4llm(binaryContent: ArrayBuffer): Promise<Pdf4llmResponse> {
-    // Convert ArrayBuffer to base64 string
-    const base64Content = Buffer.from(binaryContent).toString("base64");
-
-    const { data, error } = await this.makeRequest<Pdf4llmResponse>("/pdf4llm", {
-      pdf: base64Content,
-    });
-    if (error) {
-      throw error;
-    }
-    if (!data) {
-      throw new Error("No data returned from pdf4llm");
-    }
-
-    return data;
+    // 显示提示，告知用户服务器功能不可用
+    new Notice("PDF解析功能需要服务器支持，已被禁用。");
+    return {
+      response: {
+        content: "PDF解析功能需要服务器支持，已被禁用。",
+      },
+      elapsed_time_ms: 0,
+    };
   }
 
   async docs4llm(binaryContent: ArrayBuffer, fileType: string): Promise<Docs4llmResponse> {
-    // Create a FormData object
-    const formData = new FormData();
-
-    // Convert ArrayBuffer to Blob with appropriate mime type
-    const mimeType = this.getMimeTypeFromExtension(fileType);
-    const blob = new Blob([binaryContent], { type: mimeType });
-
-    // Create a File object with a filename including the extension
-    const fileName = `file.${fileType}`;
-    const file = new File([blob], fileName, { type: mimeType });
-
-    // Append the file to FormData
-    formData.append("files", file);
-
-    // Add file_type as a regular field
-    formData.append("file_type", fileType);
-
-    const { data, error } = await this.makeFormDataRequest<Docs4llmResponse>("/docs4llm", formData);
-
-    if (error) {
-      throw error;
-    }
-    if (!data) {
-      throw new Error("No data returned from docs4llm");
-    }
-
-    return data;
+    // 显示提示，告知用户服务器功能不可用
+    new Notice("文档解析功能需要服务器支持，已被禁用。");
+    return {
+      response: {
+        content: "文档解析功能需要服务器支持，已被禁用。",
+      },
+      elapsed_time_ms: 0,
+    };
   }
 
   private getMimeTypeFromExtension(extension: string): string {
@@ -369,27 +330,32 @@ export class BrevilabsClient {
   }
 
   async webSearch(query: string): Promise<WebSearchResponse> {
-    const { data, error } = await this.makeRequest<WebSearchResponse>("/websearch", { query });
-    if (error) {
-      throw error;
-    }
-    if (!data) {
-      throw new Error("No data returned from websearch");
-    }
-
-    return data;
+    // 显示提示，告知用户服务器功能不可用
+    new Notice("网络搜索功能需要服务器支持，已被禁用。");
+    return {
+      response: {
+        choices: [
+          {
+            message: {
+              content: "网络搜索功能需要服务器支持，已被禁用。",
+            },
+          },
+        ],
+        citations: [],
+      },
+      elapsed_time_ms: 0,
+    };
   }
 
   async youtube4llm(url: string): Promise<Youtube4llmResponse> {
-    const { data, error } = await this.makeRequest<Youtube4llmResponse>("/youtube4llm", { url });
-    if (error) {
-      throw error;
-    }
-    if (!data) {
-      throw new Error("No data returned from youtube4llm");
-    }
-
-    return data;
+    // 显示提示，告知用户服务器功能不可用
+    new Notice("YouTube解析功能需要服务器支持，已被禁用。");
+    return {
+      response: {
+        transcript: "YouTube解析功能需要服务器支持，已被禁用。",
+      },
+      elapsed_time_ms: 0,
+    };
   }
 
   async autocomplete(

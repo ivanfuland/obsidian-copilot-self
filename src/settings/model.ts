@@ -140,8 +140,8 @@ export function getSettings(): Readonly<CopilotSettings> {
 export function resetSettings(): void {
   const defaultSettingsWithBuiltIns = {
     ...DEFAULT_SETTINGS,
-    activeModels: BUILTIN_CHAT_MODELS.map((model) => ({ ...model, enabled: true })),
-    activeEmbeddingModels: BUILTIN_EMBEDDING_MODELS.map((model) => ({ ...model, enabled: true })),
+    activeModels: [],
+    activeEmbeddingModels: [],
   };
   setSettings(defaultSettingsWithBuiltIns);
 }
@@ -185,10 +185,7 @@ export function sanitizeSettings(settings: CopilotSettings): CopilotSettings {
   // fix: Maintain consistency between EmbeddingModelProviders.AZURE_OPENAI and ChatModelProviders.AZURE_OPENAI,
   // where it was 'azure_openai' before EmbeddingModelProviders.AZURE_OPENAI.
   if (!settingsToSanitize.activeEmbeddingModels) {
-    settingsToSanitize.activeEmbeddingModels = BUILTIN_EMBEDDING_MODELS.map((model) => ({
-      ...model,
-      enabled: true,
-    }));
+    settingsToSanitize.activeEmbeddingModels = []; // 不再引用内置嵌入模型
   } else {
     settingsToSanitize.activeEmbeddingModels = settingsToSanitize.activeEmbeddingModels.map((m) => {
       return {
@@ -270,11 +267,7 @@ ${userPrompt}
 }
 
 function mergeAllActiveModelsWithCoreModels(settings: CopilotSettings): CopilotSettings {
-  settings.activeModels = mergeActiveModels(settings.activeModels, BUILTIN_CHAT_MODELS);
-  settings.activeEmbeddingModels = mergeActiveModels(
-    settings.activeEmbeddingModels,
-    BUILTIN_EMBEDDING_MODELS
-  );
+  // 不再合并内置模型，直接返回用户设置的模型
   return settings;
 }
 

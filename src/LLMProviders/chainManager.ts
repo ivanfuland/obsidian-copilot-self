@@ -30,6 +30,7 @@ import { App, Notice } from "obsidian";
 import ChatModelManager from "./chatModelManager";
 import MemoryManager from "./memoryManager";
 import PromptManager from "./promptManager";
+import { ChatModelProviders } from "@/constants";
 
 export default class ChainManager {
   private chain: RunnableSequence;
@@ -134,7 +135,15 @@ export default class ChainManager {
         if (!customModel) {
           // Reset default model if no model is found
           console.error("Resetting default model. No model configuration found for: ", newModelKey);
-          customModel = BUILTIN_CHAT_MODELS[0];
+          // 创建一个默认模型，而不是使用BUILTIN_CHAT_MODELS[0]
+          customModel = {
+            name: "custom-model",
+            provider: ChatModelProviders.OPENAI,
+            enabled: true,
+            isBuiltIn: false,
+            core: true,
+            projectEnabled: true,
+          };
           newModelKey = customModel.name + "|" + customModel.provider;
         }
 
