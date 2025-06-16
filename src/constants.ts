@@ -178,6 +178,7 @@ export enum EmbeddingModelProviders {
   OPENAI_FORMAT = "3rd party (openai-format)",
   COPILOT_PLUS = "copilot-plus",
   COPILOT_PLUS_JINA = "copilot-plus-jina",
+  JUDYPLAN = "judyplan",
 }
 
 export enum EmbeddingModels {
@@ -341,7 +342,7 @@ export const ProviderSettingsKeyMap: Record<SettingKeyProviders, keyof CopilotSe
   "copilot-plus": "plusLicenseKey",
   mistralai: "mistralApiKey",
   deepseek: "deepseekApiKey",
-  judyplan: "openAIApiKey",
+  judyplan: "judyplanApiKey",
 };
 
 export enum VAULT_VECTOR_STORE_STRATEGY {
@@ -442,6 +443,7 @@ export const DEFAULT_SETTINGS: CopilotSettings = {
   xaiApiKey: "",
   mistralApiKey: "",
   deepseekApiKey: "",
+  judyplanApiKey: "",
   defaultChainType: ChainType.LLM_CHAIN,
   defaultModelKey: ChatModels.GPT_41 + "|" + ChatModelProviders.OPENAI,
   embeddingModelKey: EmbeddingModels.OPENAI_EMBEDDING_SMALL + "|" + EmbeddingModelProviders.OPENAI,

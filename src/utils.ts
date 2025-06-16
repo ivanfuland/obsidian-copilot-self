@@ -480,6 +480,14 @@ export async function safeFetch(url: string, options: RequestInit = {}): Promise
   // Initialize headers if not provided
   const headers = options.headers ? { ...options.headers } : {};
 
+  // 为JudyPlan请求添加特殊处理
+  if (url.includes("jdpl.judyplan.com")) {
+    // 确保包含必要的CORS和认证头
+    (headers as Record<string, string>)["Access-Control-Allow-Origin"] = "*";
+    (headers as Record<string, string>)["dangerously-allow-browser"] = "true";
+    logInfo("==== JudyPlan API request detected, adding special headers ====");
+  }
+
   // Remove content-length if it exists
   delete (headers as Record<string, string>)["content-length"];
 

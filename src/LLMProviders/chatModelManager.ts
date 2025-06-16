@@ -73,7 +73,7 @@ export default class ChatModelManager {
     [ChatModelProviders.COPILOT_PLUS]: () => getSettings().plusLicenseKey,
     [ChatModelProviders.MISTRAL]: () => getSettings().mistralApiKey,
     [ChatModelProviders.DEEPSEEK]: () => getSettings().deepseekApiKey,
-    [ChatModelProviders.JUDYPLAN]: () => getSettings().openAIApiKey,
+    [ChatModelProviders.JUDYPLAN]: () => getSettings().judyplanApiKey,
   } as const;
 
   private constructor() {
@@ -254,11 +254,14 @@ export default class ChatModelManager {
       },
       [ChatModelProviders.JUDYPLAN]: {
         modelName: modelName,
-        openAIApiKey: await getDecryptedKey(customModel.apiKey || settings.openAIApiKey),
+        openAIApiKey: await getDecryptedKey(customModel.apiKey || settings.judyplanApiKey),
         configuration: {
-          baseURL: customModel.baseUrl || ProviderInfo[ChatModelProviders.JUDYPLAN].host,
-          fetch: customModel.enableCors ? safeFetch : undefined,
-          defaultHeaders: { "dangerously-allow-browser": "true" },
+          baseURL: customModel.baseUrl || "http://jdpl.judyplan.com:4000/v1",
+          fetch: safeFetch, // 始终使用safeFetch，不考虑enableCors设置
+          defaultHeaders: { 
+            "dangerously-allow-browser": "true",
+            "Access-Control-Allow-Origin": "*"
+          },
         },
         ...this.handleOpenAIExtraArgs(isOSeries, settings.maxTokens, settings.temperature),
       },

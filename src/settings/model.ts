@@ -56,6 +56,7 @@ export interface CopilotSettings {
   xaiApiKey: string;
   mistralApiKey: string;
   deepseekApiKey: string;
+  judyplanApiKey: string;
   defaultChainType: ChainType;
   defaultModelKey: string;
   embeddingModelKey: string;
